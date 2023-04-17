@@ -3,7 +3,12 @@
 # %% auto 0
 __all__ = ['getEvents']
 
-# %% ../nbs/04_events.ipynb 4
+# %% ../nbs/04_events.ipynb 3
+import numpy as np
+from matplotlib import pyplot as plt
+import seaborn as sns
+
+# %% ../nbs/04_events.ipynb 5
 # Process data
 def getEvents(data, samplerate):
     '''

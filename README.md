@@ -6,18 +6,37 @@ SyncMaster
 This file will become your README and also the index of your
 documentation.
 
-## Install
+## Installation
 
 ``` sh
 pip install syncmaster
 ```
 
-## How to use
+## Example application
 
 Fill me in please! Don’t forget code examples:
 
 ``` python
-1+1
+# Import library
+import syncmaster
+
+# Create device object
+device = syncmaster.SyncMaster()
+
+# Run trial with start and end signals
+device.start()    # Send start signal
+
+''' Run behavioural task '''
+
+device.end()      # Send end signal
+
+# Close communication channel when finished
+device.close()
 ```
 
-    2
+## Output
+
+    [[<matplotlib.axis.YTick>,
+      <matplotlib.axis.YTick>]]
+
+![](index_files/figure-commonmark/cell-3-output-2.png)
