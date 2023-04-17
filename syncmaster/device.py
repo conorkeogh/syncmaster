@@ -65,11 +65,10 @@ class SyncMaster:
                 # Connect to serial port
                 self.ser = serial.Serial(port.device, self.BAUDRATE, timeout=1)
 
-                # Send test message
-                self.sendMessage(self.HOST_MESSAGE)
-                
-                # Read response
-                response = self.ser.readline()
+                # Send test message and read response; repeat 3 times and keep third
+                for _ in range(3):
+                    self.sendMessage(self.HOST_MESSAGE)
+                    response = self.ser.readline()
 
                 # Check if response is appropriate
                 response = int(response)
