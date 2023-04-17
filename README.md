@@ -36,7 +36,4 @@ device.close()
 
 ## Output
 
-    [[<matplotlib.axis.YTick>,
-      <matplotlib.axis.YTick>]]
-
-![](index_files/figure-commonmark/cell-3-output-2.png)
+![](index_files/figure-commonmark/cell-3-output-1.png)
