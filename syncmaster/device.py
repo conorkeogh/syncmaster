@@ -21,6 +21,9 @@ Provide functions to interact with device
 Finds device and confirms presence
 Sends messages to trigger device
 '''
+import serial
+import serial.tools.list_ports
+
 class SyncMaster:
 
     def __init__(self):
