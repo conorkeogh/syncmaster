@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['SyncMaster']
 
-# %% ../nbs/02_initialisation.ipynb 3
+# %% ../nbs/02_initialisation.ipynb 10
 '''
     SyncMaster device drivers
 
@@ -29,9 +29,7 @@ class SyncMaster:
 
     def __init__(self):
         '''
-        Find device and check acknowledge message
-        Finds device on USB port automatically
-        Raises error if device not found
+        Device object for controlling synchronisation
         '''
 
         '''
@@ -96,15 +94,19 @@ class SyncMaster:
     ''' Send required messages over serial '''
 
     def start(self):
+        ''' Send start signal '''
         self.sendMessage(self.STARTMARKER)
 
     def end(self):
+        ''' Send end signal '''
         self.sendMessage(self.ENDMARKER)
 
     def event1(self):
+        ''' Send event 1 signal '''
         self.sendMessage(self.EVENT1)
 
     def event2(self):
+        ''' Send event 2 signal '''
         self.sendMessage(self.EVENT2)
 
     # Send message via serial port
@@ -118,8 +120,7 @@ class SyncMaster:
     # Close channel
     def close(self):
         '''
-        Closes serial connection
-        Should be run before shutting off device
+        Closes device connection
         '''
         self.ser.close()
         
