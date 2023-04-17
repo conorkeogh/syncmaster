@@ -1,0 +1,33 @@
+{
+  "info": {
+    "subdir": "noarch"
+  },
+  "packages": {
+    "syncmaster-0.0.2-pyh39e3cac_0.tar.bz2": {
+      "build": "pyh39e3cac_0",
+      "build_number": 0,
+      "depends": [
+        "matplotlib",
+        "numpy",
+        "packaging",
+        "pip",
+        "pyserial",
+        "python",
+        "seaborn"
+      ],
+      "license": "Apache Software",
+      "license_family": "APACHE",
+      "md5": "2ebc88ece7e077f59b903399790a2100",
+      "name": "syncmaster",
+      "noarch": "python",
+      "sha256": "ffb5f88f3e3e4525a1417b50b703bd8a2fc49c80d1f2aeb01f7a2612e0616972",
+      "size": 14098,
+      "subdir": "noarch",
+      "timestamp": 1681729704835,
+      "version": "0.0.2"
+    }
+  },
+  "packages.conda": {},
+  "removed": [],
+  "repodata_version": 1
+}

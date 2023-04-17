@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['getEvents']
 
-# %% ../nbs/04_events.ipynb 3
+# %% ../nbs/04_events.ipynb 4
 # Process data
 def getEvents(data, samplerate):
     '''
