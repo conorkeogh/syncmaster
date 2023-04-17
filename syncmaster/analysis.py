@@ -8,16 +8,13 @@ import numpy as np
 from matplotlib import pyplot as plt
 import seaborn as sns
 
-# %% ../nbs/04_events.ipynb 5
+# %% ../nbs/04_events.ipynb 11
 # Process data
-def getEvents(data, samplerate):
+def getEvents(data:np.ndarray, # Single-channel data; 1 x t array
+              samplerate: int # Recording sample rate (Hz)
+             )->np.ndarray: # Event timings; 4 x t array
     '''
-    Recover event timings
-    Args:
-        data: 1d array containing event signals recorded at each timepoint
-        samplerate: samplerate of recording (Hz)
-    Returns:
-        events: 4 x t array with event onset IDs; 1 at timepoint where event starts
+    Recover discrete event timings from single-channel data
     '''
     
     # Define pulse lengths (ms)
