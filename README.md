@@ -68,6 +68,7 @@ channel. Each pulse length corresponds to a specific event type.
 The package includes a function for recovering the discrete event
 timings from this single-channel pulse data in order to facilitate data
 analysis. A simple example is shown below with raw recorded data above
-and each subsequent row showing
+and each subsequent row showing recovered trigger timings for each event
+type. This is described in further detail in the `analysis` section.
 
 ![](index_files/figure-commonmark/cell-3-output-1.png)
