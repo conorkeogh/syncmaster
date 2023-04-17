@@ -3,7 +3,9 @@ project:
 
 format:
   html:
-    theme: cosmo
+    theme: 
+        light: flatly
+        dark: darkly
     css: styles.css
     toc: true
 
@@ -12,7 +14,7 @@ website:
   open-graph: true
   repo-actions: [issue]
   navbar:
-    background: primary
+    background: dark
     search: true
   sidebar:
     style: floating
