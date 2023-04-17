@@ -15,4 +15,6 @@ d = { 'settings': { 'branch': 'main',
                                    'syncmaster.device.SyncMaster.event2': ('initialisation.html#syncmaster.event2', 'syncmaster/device.py'),
                                    'syncmaster.device.SyncMaster.sendMessage': ( 'initialisation.html#syncmaster.sendmessage',
                                                                                  'syncmaster/device.py'),
-                                   'syncmaster.device.SyncMaster.start': ('initialisation.html#syncmaster.start', 'syncmaster/device.py')}}}
+                                   'syncmaster.device.SyncMaster.start': ('initialisation.html#syncmaster.start', 'syncmaster/device.py'),
+                                   'syncmaster.device.SyncMaster.testSignal': ( 'initialisation.html#syncmaster.testsignal',
+                                                                                'syncmaster/device.py')}}}

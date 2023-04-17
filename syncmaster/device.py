@@ -23,6 +23,7 @@ Sends messages to trigger device
 '''
 import serial
 import serial.tools.list_ports
+import time
 
 class SyncMaster:
 
@@ -121,3 +122,12 @@ class SyncMaster:
         Should be run before shutting off device
         '''
         self.ser.close()
+        
+    # Send test signal
+    def testSignal(self):
+        '''
+        Sends test pulses over output port once per second for five seconds
+        '''
+        for _ in range(5):
+            self.start()
+            time.sleep(1)

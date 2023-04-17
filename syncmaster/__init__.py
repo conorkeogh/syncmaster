@@ -4,6 +4,7 @@ __version__ = "0.0.2"
 import numpy as np
 import serial
 import serial.tools.list_ports
+import time
 
 # Import main functions
 from syncmaster.device import SyncMaster
