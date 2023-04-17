@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "syncmaster"
+  site-url: "https://conorkeogh.github.io/syncmaster"
+  description: "Device and drivers for generating trigger signals to synchronise recorded signals with behavioural data"
+  repo-branch: main
+  repo-url: "https://github.com/conorkeogh/syncmaster"
