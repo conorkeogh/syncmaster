@@ -62,7 +62,7 @@ class SyncMaster:
         for port in ports:
             try:
                 # Connect to serial port
-                self.ser = serial.Serial(port.device, self.BAUDRATE, timeout=1)
+                self.ser = serial.Serial(port.device, self.BAUDRATE, timeout=1, write_timeout=1)
 
                 # Send test message and read response; repeat 3 times and keep third
                 for _ in range(3):
