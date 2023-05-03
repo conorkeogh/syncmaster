@@ -77,6 +77,6 @@ type. This is described in further detail in the `analysis` section.
 
 ![](index_files/figure-commonmark/cell-3-output-1.png)
 
-Note that the `getEvents()` function can also be used to recover precise
-event timings for user-defined events. This is outlined in detail in the
-`analysis` section.
+This approach can also be used to recover precise event timings for
+user-defined events. This is outlined in detail in the `analysis`
+section.
