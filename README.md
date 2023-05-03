@@ -60,6 +60,10 @@ device.close()
 On completion of the task, the communication channel with the device
 should be formally closed.
 
+Note that more complex task designs with up to 100 user-defined event
+types can be accommodated. This is outlined in detail in the
+`triggering` section.
+
 ## Output
 
 The device produced pulses of differing lengths on a single output
