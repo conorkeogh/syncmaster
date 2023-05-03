@@ -7,7 +7,6 @@
 
 	Monitors serial ports
 	Sends trigger pulse over output port based on incoming message
-	Responses and ports set in configuration.h
 */
 
 // Import drivers

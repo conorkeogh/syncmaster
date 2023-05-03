@@ -32,81 +32,74 @@ void SyncMaster::init() {
    When received, record message then parse and respond */
 void SyncMaster::run() {
 	// Reset state
-	newData = false;
-	idx = 0;
-
-	// Wait until message received
-	while (!Serial.available()) {}
+	static boolean recvInProgress = false;
+	static byte idx = 0;
+	char current_byte = 0;
 
 	// Read in message
 	while (Serial.available() && newData == false) {
 		// Read in next byte
 		current_byte = Serial.read();
 
-		// Check if end of current string
-		if (current_byte != endMarker) {
-			// Save current byte
-			message[idx] = current_byte;
-			idx++;
+		// Check if currently receiving data (i.e. start indicator received)
+		if (recvInProgress == true) {
+			// Record byte if not end of message
+			if (current_byte != endMarker) {
+				// Save to message array
+				message[idx] = current_byte;
 
-			// Avoid overflow
-			if (idx >= 32) { idx = 31; }
+				// Move to next index in message array
+				idx++;
+
+				// Avoid overflowing array
+				if (idx >= numChars) { idx = numChars - 1; }
+			}
+			
+			// If end of message: end terminate message
+			else {
+				// Terminate message
+				message[idx] = '\0';
+				recvInProgress = false;
+				idx = 0;
+				newData = true;
+			}
 		}
-		else {
-			// Save end of message
-			message[idx] = '\0';
-			newData = true;
+
+		// If start marker received: start saving to array
+		else if (current_byte = startMarker) {
+			recvInProgress = true;
 		}
 	}
 
-	// Parse received message
-	parseMessage();
-}
+	// If new data received: parse this and reset
+	if (newData == true) {
+		// Convert message to integer
+		dataNumber = 0;
+		dataNumber = atoi(message);
 
-/* Start signal
-   Send signal to indicate start of trial */
-void SyncMaster::start() {
-	// Send signal
-	sendPulse(STARTPULSE);
-  Serial.println("start");
-}
+		// Parse received message
+		parseMessage();
 
-/* End signal
-   Send signal to indicate start of trial */
-void SyncMaster::end() {
-	// Send signal
-	sendPulse(ENDPULSE);
-   Serial.println("end");
-}
-
-/* Event 1 signal
-   Send signal to indicate event 1 */
-void SyncMaster::event1() {
-	// Send signal
-	sendPulse(EVENT1PULSE);
-  Serial.println("event1");
-}
-
-/* Event 2 signal
-   Send signal to indicate event 2 */
-void SyncMaster::event2() {
-	// Send signal
-	sendPulse(EVENT2PULSE);
-  Serial.println("event2");
+		// Reset data flag
+		newData = false;
+	}
 }
 
 /* Parse input
    Interpret received message and trigger response */
 void SyncMaster::parseMessage() {
-	// Get input message
-	int message_parsed = atoi(message);
 
-	// Parse input and respond
-	if (message_parsed == STARTMARKER) { start(); }
-	else if (message_parsed == ENDMARKER) { end(); }
-	else if (message_parsed == EVENT1) { event1(); }
-	else if (message_parsed == EVENT2) { event2(); }
-	else if (message_parsed == HOST_MESSAGE) { acknowledge(); }
+	// Map number -> pulse duration
+	int pulse_duration = dataNumber * PULSE_STEPSIZE;
+
+	// If target duration less than max, send pulse
+	if (pulse_duration <= MAX_PULSE) {
+		sendPulse(pulse_duration);
+	}
+
+	if (strcmp(message, greeting) == 0) {
+		Serial.println(response);
+	}
 }
 
 /* Send output signal
@@ -120,12 +113,4 @@ void SyncMaster::sendPulse(int pulsewidth) {
 
 	// Set pin low
 	digitalWrite(OUTPUT_PIN, LOW);
-}
-
-/* Acknowledge host message
-   If host message received, respond with acknowledge signal
-   Allows device to be automatically identified by host drivers */
-void SyncMaster::acknowledge() {
-	// Send acknowledge message over serial
-	Serial.println(ACKNOWLEDGE);
 }
