@@ -36,20 +36,16 @@ class SyncMaster:
         Define constants for device configuration
         '''
         # Define messages
-        self.STARTMARKER = b'1'
-        self.ENDMARKER = b'2'
-        self.EVENT1 = b'3'
-        self.EVENT2 = b'4'
+        self.GREETING = b'<best wishes>'
+        self.RESPONSE = b'warmest regards'
+        self.startMarker = '<'
+        self.endMarker = '>'
     
-        # Define trigger pulse widths (milliseconds)
-        self.STARTPULSE = 50
-        self.ENDPULSE = 100
-        self.EVENT1PULSE = 150
-        self.EVENT2PULSE = 200
-    
-        # Define host acknowledge messages
-        self.HOST_MESSAGE = b'5'
-        self.ACKNOWLEDGE = 42
+        # Define trigger pulse widths (val*10, milliseconds)
+        self.STARTPULSE = 5 # 50ms
+        self.ENDPULSE = 10 # 100ms
+        self.EVENT1PULSE = 15 # 150ms
+        self.EVENT2PULSE = 20 # 200ms
     
         # Define COM port settings
         self.BAUDRATE = 115200
@@ -70,8 +66,7 @@ class SyncMaster:
                     response = self.ser.readline()
 
                 # Check if response is appropriate
-                response = int(response)
-                if response == self.ACKNOWLEDGE:
+                if response.decode().strip() == self.RESPONSE:
                     self.target_port = port.device
                     port_found = True
 
@@ -108,6 +103,10 @@ class SyncMaster:
     def event2(self):
         ''' Send event 2 signal '''
         self.sendMessage(self.EVENT2)
+        
+    def event(self, eventID):
+        ''' Create event marker '''
+        self.sendMessage(eventID)
 
     # Send message via serial port
     def sendMessage(self, message):
@@ -115,7 +114,8 @@ class SyncMaster:
         Send message over serial port
         Takes message to send
         '''
-        self.ser.write(message)
+        message_prepared = self.startMarker + str(message) + self.endMarker
+        self.ser.write(message_prepared.encode())
 
     # Close channel
     def close(self):
