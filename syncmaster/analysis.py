@@ -10,65 +10,73 @@ import seaborn as sns
 
 # %% ../nbs/04_events.ipynb 11
 # Process data
-def getEvents(data:np.ndarray, # Single-channel data; 1 x t array
-              samplerate: int # Recording sample rate (Hz)
-             )->np.ndarray: # Event timings; 4 x t array
+def getEvents(data: np.ndarray, # Single-channel data; 1 x t array
+              samplerate: int, # Recording sample rate (Hz)
+              eventIDs: list = None # List of unique event IDs
+             )->np.ndarray: # Event timings; n x t array
     '''
     Recover discrete event timings from single-channel data
     '''
     
-    # Define pulse lengths (ms)
-    STARTPULSE = 50
-    ENDPULSE = 100
-    EVENT1PULSE = 150
-    EVENT2PULSE = 200
+    # If no event IDs defined, use defaults
+    if eventIDs is None:
+       eventIDs = [5, 10, 15, 20] # Set default event IDs (start, end, event1, event2)
     
-    # Create empty array - 4 x t
-    events = np.zeros((4, len(data)))
-    
-    # Define threshold - 0.75x max value (digital signal)
+    # Get pulse widths
+    pulsewidths = np.array(eventIDs)
+    pulsewidths = pulsewidths * 10 # Convert to ms
+
+    # Get number of events
+    num_events = len(eventIDs)
+
+    # Create empty array - n x t
+    events = np.zeros((num_events, len(data)))
+
+    # Define threshold - 0.75x max value
     threshold = 0.75 * np.max(data)
-    
-    # Define cutoffs - number of samples, set at midpoint between event types
-    event2_cutoff = (175 / 1000) * samplerate
-    event1_cutoff = (125 / 1000) * samplerate
-    end_cutoff = (75 / 1000) * samplerate
-    start_cutoff = (25 / 1000) * samplerate
-    
+
+    # Define cutoffs - in number of samples; expect high 5ms before, low 5ms after expected end
+    cutoffs = ((pulsewidths - 5)/1000) * samplerate # Point 5ms before expected end of pulse
+
+    # Sort cutoffs in descending order and get sorted order
+    cutoffs_sorted = np.sort(cutoffs) 
+    cutoffs_sorted = cutoffs_sorted[::-1]
+    cutoffs_args = np.argsort(cutoffs)
+    cutoffs_args = cutoffs_args[::-1]
+
     # Loop over points in data array
     idx = 0
     while idx < len(data):
         # Get current datapoint
         d = data[idx]
-        
+
         # If point > threshold: find next point below threshold
         if d > threshold:
             # Reset state
             window = 1
             end_found = False
-            
+
             # Continue until value drops below threshold or data ends
-            while(idx + window <= len(data) and end_found == False):
+            while (idx + window <= len(data) and end_found == False):
                 # Check if dropped below threshold
                 if data[idx + window] < threshold:
                     end_found = True
-                
+
                 window += 1
-                
+
             # If end found: assign to event type
             if end_found:
-                if window > event2_cutoff:
-                    events[3, idx] = 1
-                elif window > event1_cutoff:
-                    events[2, idx] = 1
-                elif window > end_cutoff:
-                    events[1, idx] = 1
-                elif window > start_cutoff:
-                    events[0, idx] = 1
-                    
+                # Iterate over sorted cutoffs
+                event_assigned = False # Avoid assigning to multiple events
+                for cutoff_id, cutoff in enumerate(cutoffs_sorted):
+                    # If greater than expected, assign to event type (unsorted)
+                    if window > cutoff and event_assigned == False:
+                        events[cutoffs_args[cutoff_id], idx] = 1
+                        event_assigned = True
+
                 # Move current point to end of window
                 idx = idx + window
-            
+
         # Move to next datapoint
         idx += 1
         
