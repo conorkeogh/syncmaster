@@ -37,7 +37,7 @@ class SyncMaster:
         '''
         # Define messages
         self.GREETING = b'<best wishes>'
-        self.RESPONSE = b'warmest regards'
+        self.RESPONSE = 'warmest regards'
         self.startMarker = '<'
         self.endMarker = '>'
     
@@ -62,7 +62,7 @@ class SyncMaster:
 
                 # Send test message and read response; repeat 3 times and keep third
                 for _ in range(3):
-                    self.sendMessage(self.HOST_MESSAGE)
+                    self.ser.write(self.GREETING)
                     response = self.ser.readline()
 
                 # Check if response is appropriate
@@ -84,7 +84,7 @@ class SyncMaster:
         # If port not found: raise error
         else:
             raise Exception("Device not found")
-#            print("Device not found")
+            #print("Device not found")
 
     ''' Send required messages over serial '''
 
