@@ -90,19 +90,19 @@ class SyncMaster:
 
     def start(self):
         ''' Send start signal '''
-        self.sendMessage(self.STARTMARKER)
+        self.sendMessage(self.STARTPULSE)
 
     def end(self):
         ''' Send end signal '''
-        self.sendMessage(self.ENDMARKER)
+        self.sendMessage(self.ENDPULSE)
 
     def event1(self):
         ''' Send event 1 signal '''
-        self.sendMessage(self.EVENT1)
+        self.sendMessage(self.EVENT1PULSE)
 
     def event2(self):
         ''' Send event 2 signal '''
-        self.sendMessage(self.EVENT2)
+        self.sendMessage(self.EVENT2PULSE)
         
     def event(self, eventID):
         ''' Create event marker '''
