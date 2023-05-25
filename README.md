@@ -80,3 +80,15 @@ type. This is described in further detail in the `analysis` section.
 This approach can also be used to recover precise event timings for
 user-defined events. This is outlined in detail in the `analysis`
 section.
+
+<div class="dark-mode">
+
+![Oxford Neural Interfacing 2023](oni.png)
+
+</div>
+
+<div class="light-mode">
+
+![Oxford Neural Interfacing 2023](oni_blue.png)
+
+</div>
