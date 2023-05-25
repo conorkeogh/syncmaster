@@ -8,7 +8,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 import seaborn as sns
 
-# %% ../nbs/04_events.ipynb 11
+# %% ../nbs/04_events.ipynb 12
 # Process data
 def getEvents(data: np.ndarray, # Single-channel data; 1 x t array
               samplerate: int, # Recording sample rate (Hz)
